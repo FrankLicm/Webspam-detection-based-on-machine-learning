@@ -1,6 +1,6 @@
 # Webspam-detection-based-on-machine-learning
 
-####在DataAcquire文件夹下是一些用于获取网页的模块，具体如下:
+#### 在DataAcquire文件夹下是一些用于获取网页的模块，具体如下:
 
  1.main.py是程序入口，可以通过运行此文件获取到所有网页内容并存储到磁盘上
 
@@ -16,12 +16,13 @@
 
  7.URLExtractor是使用FileNameGenerator来根据html链接生成符合操作系统命名规范的文件名，并且可以通过文件名将html链接还原出来
 
- #####DataAcquire主要使用方法
+#### DataAcquire主要使用方法
+
  在ExperimentSample是数据集及数据集处理的中间数据。其中杨望老师提供了由原来的关键词匹配算法爬取的网页链接集合两个，分别是DataSource和DataSource1,
  将这两个文件夹中的文件输入到这个main.py中可以爬取到其中html内容并存储到HtmlSource和HtmlSource1,如果遇到网页错误或者没有这个网页等问题会输出到Errors文件夹，里面的内容是问题原因。
  通过这样我们就获取到了网页内容，我们将基于这些数据进行训练和测试
 
-####在DataPreprocessAndJudge文件下是用于处理数据并且检测学习的模块。具体如下:
+#### 在DataPreprocessAndJudge文件下是用于处理数据并且检测学习的模块。具体如下:
 
  1.HtmlBlockSeparator模块是网页分块模块，对网页进行分块，并存入文件系统
 
@@ -41,7 +42,7 @@
 
  9.RightRatioTest模块是将测试数据算法分类结果和人工分类结果比较，计算正确率。
 
- ##### DataPreprocessAndJudge主要使用方法
+##### DataPreprocessAndJudge主要使用方法
 
  这部分是核心部分，其实分为两个部分，第一部分是训练，第二部分是输入新数据测试准确率和误报率，
  第一部分的入口是AllArrayGenerator和TextAnalysis两个，
@@ -52,6 +53,7 @@
  nb_clf = MultinomialNB()  # MultinomialNB的参数设置可以参考sklearn官网
  minibatch_train_iterators = iter_minibatches(ArrayDataCSVFilePath, minibatch_size=5000)
  for i, (X_train, y_train) in enumerate(minibatch_train_iterators):
+
 使用 partial_fit ，并在第一次调用 partial_fit 的时候指定 classes
 
 ​      nb_clf.partial_fit(X_train, y_train, classes=np.array([0, 1]))
@@ -60,8 +62,8 @@
  print("{} score".format(nb_clf.score(X_test, y_test)))  # 在测试集上看效果
 
  joblib.dump(nb_clf, ModelFilePath)
- 这段来将arraydata用MultinomialNB的机器学习算法结合增量学习将之前生成的array数据生成机器学习模型。这边你要做的也是把这段相关的注释取消掉，无关的注释掉。
- 这段确实存在问题，可以将生成模型的这段单独封装出来更好。
+ 这段来将arraydata用MultinomialNB的机器学习算法结合增量学习将之前生成的array数据生成机器学习模型。这边要做的也是把这段相关的注释取消掉。
+ 这段存在问题，可以将生成模型的这段单独封装出来更好。
 
  TextAnalysis是用来初始化优势率字典，
  以上两个所用的数据路径及生成的数据路径可以从代码中看出。
